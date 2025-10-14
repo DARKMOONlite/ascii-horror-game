@@ -478,7 +478,7 @@ Enum for text alignment options.
 - `LEFT`: Left-aligned text
 - `CENTER`: Center-aligned text
 - `RIGHT`: Right-aligned text
-- `JUSTIFY`: Justified text (not fully implemented)
+- `JUSTIFY`: Justified text (placeholder for future implementation)
 
 ### Constructor
 

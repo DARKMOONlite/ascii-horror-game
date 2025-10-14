@@ -132,8 +132,7 @@ int main() {
 - `setEffect(effect)` - Apply effects to all words
 - `setAlignment(align)` - Set alignment (LEFT, CENTER, RIGHT, JUSTIFY)
 - `setMaxWidth(width)` - Set maximum width for word wrapping
-- `renderToPanel(panel, row, col)` - Render to a panel
-- `renderToPanel(panel, row, col)` - Render current frame
+- `renderToPanel(panel, row, col)` - Render paragraph to a panel
 
 ### Use Cases
 

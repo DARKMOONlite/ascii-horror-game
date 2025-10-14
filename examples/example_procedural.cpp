@@ -33,9 +33,9 @@ ASCIIImage createGradient(int width, int height, bool horizontal) {
         for (int x = 0; x < width; ++x) {
             unsigned char brightness;
             if (horizontal) {
-                brightness = static_cast<unsigned char>((x * 255) / (width - 1));
+                brightness = static_cast<unsigned char>((x * 255) / std::max(width - 1, 1));
             } else {
-                brightness = static_cast<unsigned char>((y * 255) / (height - 1));
+                brightness = static_cast<unsigned char>((y * 255) / std::max(height - 1, 1));
             }
             data[y * width + x] = brightness;
         }
@@ -114,9 +114,9 @@ ASCIIImage createColorPattern(int width, int height) {
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             int idx = (y * width + x) * 3;
-            data[idx] = static_cast<unsigned char>((x * 255) / (width - 1));     // R
-            data[idx + 1] = static_cast<unsigned char>((y * 255) / (height - 1)); // G
-            data[idx + 2] = 128;                                                   // B
+            data[idx] = static_cast<unsigned char>((x * 255) / std::max(width - 1, 1));     // R
+            data[idx + 1] = static_cast<unsigned char>((y * 255) / std::max(height - 1, 1)); // G
+            data[idx + 2] = 128;                                                              // B
         }
     }
     

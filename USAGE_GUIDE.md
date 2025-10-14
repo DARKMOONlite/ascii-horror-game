@@ -330,3 +330,4 @@ See the `examples/` directory for complete working examples:
 - `example_image.cpp` - ASCII image display
 - `example_video.cpp` - Animated ASCII video
 - `example_full.cpp` - Complete game UI demonstration
+- `example_procedural.cpp` - Procedural pattern generation

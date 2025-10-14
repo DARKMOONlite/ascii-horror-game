@@ -326,6 +326,252 @@ Renders current frame to panel.
 
 ---
 
+## TextEffect
+
+Enum for text effects that can be applied to ASCII letters, words, and paragraphs.
+
+### Values
+- `NONE` (0): No effect
+- `BOLD` (1): Bold/thick characters
+- `ITALIC` (2): Italic/slanted characters
+- `UNDERLINE` (4): Underlined text
+- `BLINK` (8): Blinking animation
+- `WAVE` (16): Wave motion effect
+- `SHAKE` (32): Shake/vibrate effect
+
+Effects can be combined using bitwise OR operator (`|`).
+
+---
+
+## ASCIILetter
+
+Represents a single large ASCII character made of multiple terminal characters.
+
+### Constructor
+
+#### `ASCIILetter(char letter = ' ', int scale = 3)`
+Creates a large ASCII letter.
+- **Parameters:**
+  - `letter`: Character to display
+  - `scale`: Size multiplier (1x, 2x, 3x, etc.)
+
+### Methods
+
+#### `void setChar(char letter)`
+Sets the character to display.
+
+#### `char getChar() const`
+Gets the current character.
+
+#### `void setScale(int scale)`
+Sets the size multiplier for the letter.
+
+#### `int getScale() const`
+Gets the current scale.
+
+#### `void setColor(Color color)`
+Sets the color of the letter.
+
+#### `Color getColor() const`
+Gets the current color.
+
+#### `void setEffect(TextEffect effect)`
+Sets text effects (BOLD, ITALIC, etc.).
+
+#### `TextEffect getEffect() const`
+Gets the current text effect.
+
+#### `bool loadFont(const std::string& fontPath)`
+Loads a custom TTF font for rendering (placeholder for future FreeType support).
+- **Returns:** True if successful, false otherwise
+
+#### `int getWidth() const`
+Gets the width in terminal characters.
+
+#### `int getHeight() const`
+Gets the height in terminal characters.
+
+#### `const std::vector<std::string>& getRenderedLines() const`
+Gets the rendered character as lines of text.
+
+#### `void renderToBuffer(std::vector<std::vector<char>>& buffer, int startRow, int startCol) const`
+Renders the letter to a character buffer.
+
+---
+
+## ASCIIWord
+
+Represents a word made of multiple ASCII letters.
+
+### Constructor
+
+#### `ASCIIWord(const std::string& text = "", int scale = 3)`
+Creates an ASCII word.
+- **Parameters:**
+  - `text`: Text to display
+  - `scale`: Size multiplier for all letters
+
+### Methods
+
+#### `void setText(const std::string& text)`
+Sets the word text.
+
+#### `std::string getText() const`
+Gets the current text.
+
+#### `void setScale(int scale)`
+Sets the scale for all letters.
+
+#### `int getScale() const`
+Gets the current scale.
+
+#### `void setColor(Color color)`
+Sets the color for all letters.
+
+#### `Color getColor() const`
+Gets the current color.
+
+#### `void setEffect(TextEffect effect)`
+Sets text effect for all letters.
+
+#### `TextEffect getEffect() const`
+Gets the current text effect.
+
+#### `void setLetterSpacing(int spacing)`
+Sets spacing between letters in characters.
+
+#### `int getLetterSpacing() const`
+Gets the current letter spacing.
+
+#### `bool loadFont(const std::string& fontPath)`
+Loads a custom font for all letters.
+
+#### `int getWidth() const`
+Gets the total width including letter spacing.
+
+#### `int getHeight() const`
+Gets the height (max height of all letters).
+
+#### `std::shared_ptr<ASCIILetter> getLetter(size_t index)`
+Gets an individual letter by index.
+
+#### `size_t getLetterCount() const`
+Gets the number of letters.
+
+#### `std::vector<std::string> renderLines() const`
+Renders the word to lines of text.
+
+#### `void renderToBuffer(std::vector<std::vector<char>>& buffer, int startRow, int startCol) const`
+Renders the word to a character buffer.
+
+---
+
+## ASCIIParagraph
+
+Represents a paragraph made of multiple ASCII words with word wrapping and alignment.
+
+### TextAlign
+
+Enum for text alignment options.
+
+#### Values
+- `LEFT`: Left-aligned text
+- `CENTER`: Center-aligned text
+- `RIGHT`: Right-aligned text
+- `JUSTIFY`: Justified text (placeholder for future implementation)
+
+### Constructor
+
+#### `ASCIIParagraph(const std::string& text = "", int scale = 3)`
+Creates an ASCII paragraph.
+- **Parameters:**
+  - `text`: Text to display
+  - `scale`: Size multiplier for all words
+
+### Methods
+
+#### `void setText(const std::string& text)`
+Sets the paragraph text.
+
+#### `std::string getText() const`
+Gets the current text.
+
+#### `void setScale(int scale)`
+Sets the scale for all words.
+
+#### `int getScale() const`
+Gets the current scale.
+
+#### `void setColor(Color color)`
+Sets the color for all words.
+
+#### `Color getColor() const`
+Gets the current color.
+
+#### `void setEffect(TextEffect effect)`
+Sets text effect for all words.
+
+#### `TextEffect getEffect() const`
+Gets the current text effect.
+
+#### `void setWordSpacing(int spacing)`
+Sets spacing between words.
+
+#### `int getWordSpacing() const`
+Gets the current word spacing.
+
+#### `void setLineSpacing(int spacing)`
+Sets spacing between lines.
+
+#### `int getLineSpacing() const`
+Gets the current line spacing.
+
+#### `void setLetterSpacing(int spacing)`
+Sets letter spacing for all words.
+
+#### `int getLetterSpacing() const`
+Gets the current letter spacing.
+
+#### `void setMaxWidth(int width)`
+Sets maximum width for word wrapping.
+
+#### `int getMaxWidth() const`
+Gets the current maximum width.
+
+#### `void setAlignment(TextAlign align)`
+Sets text alignment.
+
+#### `TextAlign getAlignment() const`
+Gets the current alignment.
+
+#### `bool loadFont(const std::string& fontPath)`
+Loads a custom font for all words.
+
+#### `int getWidth() const`
+Gets the width of the longest line.
+
+#### `int getHeight() const`
+Gets the total height including line spacing.
+
+#### `std::shared_ptr<ASCIIWord> getWord(size_t index)`
+Gets an individual word by index.
+
+#### `size_t getWordCount() const`
+Gets the number of words.
+
+#### `void renderToPanel(Panel& panel, int row = 0, int col = 0)`
+Renders the paragraph to a panel.
+
+#### `std::vector<std::string> renderLines() const`
+Renders the paragraph to lines of text.
+
+#### `void updateAnimation(double deltaTime)`
+Updates animation effects based on elapsed time.
+- **Parameters:**
+  - `deltaTime`: Time elapsed since last update in seconds
+
+---
+
 ## Platform Support
 
 - **Linux/Unix**: Full support with ANSI escape codes

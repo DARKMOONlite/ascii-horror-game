@@ -14,6 +14,9 @@ set(LIBRARY_SOURCES
     src/PanelManager.cpp
     src/ASCIIImage.cpp
     src/ASCIIVideo.cpp
+    src/ASCIILetter.cpp
+    src/ASCIIWord.cpp
+    src/ASCIIParagraph.cpp
 )
 
 # Create static library
@@ -34,3 +37,6 @@ target_link_libraries(example_full ascii_display)
 
 add_executable(example_procedural examples/example_procedural.cpp)
 target_link_libraries(example_procedural ascii_display)
+
+add_executable(example_text examples/example_text.cpp)
+target_link_libraries(example_text ascii_display)

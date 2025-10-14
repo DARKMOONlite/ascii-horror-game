@@ -220,6 +220,167 @@ video.loadFromGrayscaleSequence(frames, width, height);
 video.loadFromRGBSequence(frames, width, height);
 ```
 
+## Working with Large ASCII Text
+
+### ASCII Letters
+
+Create large, readable ASCII characters made of multiple terminal characters:
+
+```cpp
+#include "ASCIILetter.h"
+
+// Create a large letter 'A' with 3x scale
+ASCIILetter letterA('A', 3);
+letterA.setColor(Color::BRIGHT_GREEN);
+
+// Apply effects
+letterA.setEffect(TextEffect::BOLD);
+
+// Get rendered lines
+auto lines = letterA.getRenderedLines();
+for (size_t i = 0; i < lines.size(); ++i) {
+    panel->writeText(i, 0, lines[i], letterA.getColor());
+}
+```
+
+### ASCII Words
+
+Combine multiple letters to form words:
+
+```cpp
+#include "ASCIIWord.h"
+
+// Create a word with scale 2
+ASCIIWord word("HELLO", 2);
+word.setColor(Color::BRIGHT_CYAN);
+word.setEffect(TextEffect::BOLD);
+word.setLetterSpacing(2);  // Space between letters
+
+// Render the word
+auto lines = word.renderLines();
+for (size_t i = 0; i < lines.size(); ++i) {
+    panel->writeText(i, 0, lines[i], word.getColor());
+}
+```
+
+### ASCII Paragraphs
+
+Create multi-word text with word wrapping and alignment:
+
+```cpp
+#include "ASCIIParagraph.h"
+
+// Create a paragraph
+ASCIIParagraph para("WELCOME TO THE GAME", 2);
+para.setColor(Color::BRIGHT_MAGENTA);
+para.setMaxWidth(80);  // Maximum width for wrapping
+para.setAlignment(TextAlign::CENTER);  // Center align
+para.setWordSpacing(3);   // Space between words
+para.setLineSpacing(1);   // Space between lines
+
+// Render directly to panel
+para.renderToPanel(*panel, 0, 0);
+```
+
+### Text Effects
+
+Available text effects that can be combined:
+
+```cpp
+// Single effect
+word.setEffect(TextEffect::BOLD);
+word.setEffect(TextEffect::ITALIC);
+
+// Combine effects with bitwise OR
+word.setEffect(TextEffect::BOLD | TextEffect::ITALIC);
+
+// Available effects:
+// - TextEffect::NONE     - No effect
+// - TextEffect::BOLD     - Thicker/denser characters
+// - TextEffect::ITALIC   - Slanted characters
+// - TextEffect::UNDERLINE - Underlined (placeholder)
+// - TextEffect::BLINK    - Blinking animation (placeholder)
+// - TextEffect::WAVE     - Wave motion (placeholder)
+// - TextEffect::SHAKE    - Shake effect (placeholder)
+```
+
+### Different Scales
+
+Control the size of your ASCII text:
+
+```cpp
+// Small text (scale 1)
+ASCIIWord small("SMALL", 1);
+
+// Medium text (scale 2)
+ASCIIWord medium("MEDIUM", 2);
+
+// Large text (scale 3)
+ASCIIWord large("LARGE", 3);
+
+// Even larger (scale 4+)
+ASCIIWord xlarge("HUGE", 5);
+```
+
+### Text Alignment
+
+Control how paragraphs are aligned:
+
+```cpp
+ASCIIParagraph para("YOUR TEXT HERE", 2);
+
+// Left align (default)
+para.setAlignment(TextAlign::LEFT);
+
+// Center align
+para.setAlignment(TextAlign::CENTER);
+
+// Right align
+para.setAlignment(TextAlign::RIGHT);
+
+// Justify (placeholder for future implementation)
+para.setAlignment(TextAlign::JUSTIFY);
+```
+
+### Use Cases for Large ASCII Text
+
+1. **Game Titles**: Create eye-catching title screens
+   ```cpp
+   ASCIIParagraph title("HORROR GAME", 3);
+   title.setColor(Color::BRIGHT_RED);
+   title.setEffect(TextEffect::BOLD);
+   title.setAlignment(TextAlign::CENTER);
+   ```
+
+2. **Menu Options**: Make menu items more visible
+   ```cpp
+   ASCIIWord startOption("START", 2);
+   startOption.setColor(Color::BRIGHT_GREEN);
+   ```
+
+3. **Game Over Screen**: Display important messages
+   ```cpp
+   ASCIIParagraph gameOver("GAME OVER", 4);
+   gameOver.setColor(Color::BRIGHT_RED);
+   gameOver.setEffect(TextEffect::BOLD);
+   ```
+
+4. **Level Indicators**: Show level numbers prominently
+   ```cpp
+   ASCIIWord level("LEVEL 5", 2);
+   level.setColor(Color::BRIGHT_YELLOW);
+   ```
+
+### TTF Font Support (Future)
+
+The framework includes placeholder support for TTF fonts:
+
+```cpp
+// This will be fully implemented in a future version
+ASCIILetter letter('A');
+letter.loadFont("path/to/font.ttf");  // Currently returns false
+```
+
 ## Advanced Usage
 
 ### Z-Ordering Panels
@@ -331,3 +492,4 @@ See the `examples/` directory for complete working examples:
 - `example_video.cpp` - Animated ASCII video
 - `example_full.cpp` - Complete game UI demonstration
 - `example_procedural.cpp` - Procedural pattern generation
+- `example_text.cpp` - Large ASCII letters, words, and paragraphs with effects

@@ -1,1 +1,0 @@
-/home/runner/work/ascii-horror-game/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/example_text.dir/link.d CMakeFiles/example_text.dir/examples/example_text.cpp.o -o example_text  libascii_display.a

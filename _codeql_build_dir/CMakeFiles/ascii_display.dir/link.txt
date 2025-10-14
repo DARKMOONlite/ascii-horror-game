@@ -1,2 +1,0 @@
-/usr/bin/ar qc libascii_display.a CMakeFiles/ascii_display.dir/src/TerminalUtils.cpp.o CMakeFiles/ascii_display.dir/src/Panel.cpp.o CMakeFiles/ascii_display.dir/src/PanelManager.cpp.o CMakeFiles/ascii_display.dir/src/ASCIIImage.cpp.o CMakeFiles/ascii_display.dir/src/ASCIIVideo.cpp.o CMakeFiles/ascii_display.dir/src/ASCIILetter.cpp.o CMakeFiles/ascii_display.dir/src/ASCIIWord.cpp.o CMakeFiles/ascii_display.dir/src/ASCIIParagraph.cpp.o
-/usr/bin/ranlib libascii_display.a

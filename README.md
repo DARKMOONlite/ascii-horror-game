@@ -31,6 +31,7 @@ The framework includes several example programs:
 2. **example_image** - Shows how to create and display ASCII images
 3. **example_video** - Animates ASCII art as a video
 4. **example_full** - Full demonstration with all features
+5. **example_procedural** - Procedural pattern generation examples
 
 Run examples from the build directory:
 ```bash
@@ -38,6 +39,7 @@ Run examples from the build directory:
 ./example_image
 ./example_video
 ./example_full
+./example_procedural
 ```
 
 ### Quick Start

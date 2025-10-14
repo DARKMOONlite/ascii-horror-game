@@ -81,20 +81,27 @@ void TerminalUtils::disableAltScreen() {
 }
 
 Color TerminalUtils::rgbToColor(int r, int g, int b) {
+    // Thresholds for color categorization
+    const int COLOR_DIFF_THRESHOLD = 30;  // Max difference for grayscale detection
+    const int BRIGHTNESS_DARK = 64;       // Below this is dark
+    const int BRIGHTNESS_DIM = 128;       // Transition to bright colors
+    const int BRIGHTNESS_BRIGHT = 192;    // Above this is very bright
+    const int COLOR_COMPONENT_MIN = 100;  // Minimum for color mixing
+    
     // Simple conversion: find dominant color
     int max_val = std::max(r, std::max(g, b));
     int min_val = std::min(r, std::min(g, b));
     
     // Check for grayscale
-    if (max_val - min_val < 30) {
-        if (max_val < 64) return Color::BLACK;
-        else if (max_val < 128) return Color::BRIGHT_BLACK;
-        else if (max_val < 192) return Color::WHITE;
+    if (max_val - min_val < COLOR_DIFF_THRESHOLD) {
+        if (max_val < BRIGHTNESS_DARK) return Color::BLACK;
+        else if (max_val < BRIGHTNESS_DIM) return Color::BRIGHT_BLACK;
+        else if (max_val < BRIGHTNESS_BRIGHT) return Color::WHITE;
         else return Color::BRIGHT_WHITE;
     }
     
     // Determine dominant color
-    bool bright = max_val > 128;
+    bool bright = max_val > BRIGHTNESS_DIM;
     
     if (r > g && r > b) {
         return bright ? Color::BRIGHT_RED : Color::RED;
@@ -102,11 +109,11 @@ Color TerminalUtils::rgbToColor(int r, int g, int b) {
         return bright ? Color::BRIGHT_GREEN : Color::GREEN;
     } else if (b > r && b > g) {
         return bright ? Color::BRIGHT_BLUE : Color::BLUE;
-    } else if (r > 100 && g > 100 && b < 100) {
+    } else if (r > COLOR_COMPONENT_MIN && g > COLOR_COMPONENT_MIN && b < COLOR_COMPONENT_MIN) {
         return bright ? Color::BRIGHT_YELLOW : Color::YELLOW;
-    } else if (r > 100 && b > 100 && g < 100) {
+    } else if (r > COLOR_COMPONENT_MIN && b > COLOR_COMPONENT_MIN && g < COLOR_COMPONENT_MIN) {
         return bright ? Color::BRIGHT_MAGENTA : Color::MAGENTA;
-    } else if (g > 100 && b > 100 && r < 100) {
+    } else if (g > COLOR_COMPONENT_MIN && b > COLOR_COMPONENT_MIN && r < COLOR_COMPONENT_MIN) {
         return bright ? Color::BRIGHT_CYAN : Color::CYAN;
     }
     
@@ -118,7 +125,7 @@ char TerminalUtils::brightnessToChar(int brightness) {
     const char gradient[] = " .:-=+*#%@";
     const int gradientSize = sizeof(gradient) - 1;
     
-    int index = (brightness * gradientSize) / 256;
+    int index = (brightness * (gradientSize - 1)) / 255;
     if (index >= gradientSize) index = gradientSize - 1;
     if (index < 0) index = 0;
     

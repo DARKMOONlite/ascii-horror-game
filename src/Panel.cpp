@@ -125,7 +125,7 @@ void Panel::render() const {
         std::cout << "┘";
         
         // Draw title if present
-        if (!title_.empty() && width_ > static_cast<int>(title_.length()) + 4) {
+        if (!title_.empty() && width_ > static_cast<int>(title_.length()) + 2) {
             TerminalUtils::moveCursor(y_, x_ + 2);
             std::cout << " " << title_ << " ";
         }

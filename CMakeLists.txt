@@ -31,3 +31,6 @@ target_link_libraries(example_video ascii_display)
 
 add_executable(example_full examples/example_full.cpp)
 target_link_libraries(example_full ascii_display)
+
+add_executable(example_procedural examples/example_procedural.cpp)
+target_link_libraries(example_procedural ascii_display)

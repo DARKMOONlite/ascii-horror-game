@@ -1,5 +1,7 @@
 #include "image_processor.h"
 
+// Define STB_IMAGE_IMPLEMENTATION only once in this translation unit
+// Do not include stb_image.h with this define in any other source file
 #define STB_IMAGE_IMPLEMENTATION
 #include "../external/stb_image.h"
 

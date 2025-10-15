@@ -35,9 +35,14 @@ int main(int argc, char* argv[]) {
             return 0;
         } else if (std::strcmp(argv[i], "--width") == 0) {
             if (i + 1 < argc) {
-                targetWidth = std::atoi(argv[++i]);
-                if (targetWidth <= 0) {
-                    std::cerr << "Error: Width must be positive\n";
+                try {
+                    targetWidth = std::stoi(argv[++i]);
+                    if (targetWidth <= 0) {
+                        std::cerr << "Error: Width must be positive\n";
+                        return 1;
+                    }
+                } catch (const std::exception&) {
+                    std::cerr << "Error: Invalid width value '" << argv[i] << "'\n";
                     return 1;
                 }
             } else {

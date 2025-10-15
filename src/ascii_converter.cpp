@@ -8,7 +8,7 @@ namespace ascii_art {
 
 char AsciiConverter::brightnessToAscii(float brightness) const {
     // Brightness is in range [0, 1]
-    int numChars = std::strlen(ASCII_CHARS);
+    static const int numChars = std::strlen(ASCII_CHARS);
     int index = static_cast<int>(brightness * (numChars - 1));
     index = std::max(0, std::min(numChars - 1, index));
     return ASCII_CHARS[index];
@@ -57,13 +57,13 @@ std::string AsciiConverter::convertToAscii(const Image& img, bool useColor) {
     std::stringstream result;
     
     // Characters are roughly twice as tall as they are wide, so we sample every 2 rows
-    int blockHeight = 2;
-    int blockWidth = 1;
+    constexpr int BLOCK_HEIGHT = 2;
+    constexpr int BLOCK_WIDTH = 1;
     
-    for (int y = 0; y < img.height; y += blockHeight) {
-        for (int x = 0; x < img.width; x += blockWidth) {
+    for (int y = 0; y < img.height; y += BLOCK_HEIGHT) {
+        for (int x = 0; x < img.width; x += BLOCK_WIDTH) {
             // Get average color for this block
-            Color avgColor = getAverageColor(img, x, y, blockWidth, blockHeight);
+            Color avgColor = getAverageColor(img, x, y, BLOCK_WIDTH, BLOCK_HEIGHT);
             
             // Calculate brightness
             float brightness = getBrightness(avgColor);
@@ -92,11 +92,14 @@ std::string AsciiConverter::convertToAscii(const Image& img, bool useColor) {
 std::string AsciiConverter::convertToAsciiWithWidth(const Image& img, int targetWidth, bool useColor) {
     // Calculate target height maintaining aspect ratio
     // Account for character aspect ratio (characters are ~2x taller than wide)
+    constexpr float CHARACTER_ASPECT_RATIO = 0.5f;
+    constexpr int BLOCK_HEIGHT = 2;
+    
     float aspectRatio = static_cast<float>(img.height) / static_cast<float>(img.width);
-    int targetHeight = static_cast<int>(targetWidth * aspectRatio * 0.5f); // 0.5 for character aspect
+    int targetHeight = static_cast<int>(targetWidth * aspectRatio * CHARACTER_ASPECT_RATIO);
     
     ImageProcessor processor;
-    auto resized = processor.resize(img, targetWidth, targetHeight * 2); // *2 because we sample every 2 rows
+    auto resized = processor.resize(img, targetWidth, targetHeight * BLOCK_HEIGHT);
     
     if (!resized) {
         return "";

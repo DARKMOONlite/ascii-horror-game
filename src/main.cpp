@@ -2,6 +2,10 @@
 #include <iostream>
 #include <string>
 
+#include <game_menu.hpp>
+
+
+
 void print_usage(const char* program_name) {
     std::cout << "Usage: " << program_name << " <image_path> [width]" << std::endl;
     std::cout << "  image_path: Path to the input image file" << std::endl;
@@ -37,5 +41,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
     
-    return 0;
+
+
 }

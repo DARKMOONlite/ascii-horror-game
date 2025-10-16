@@ -7,29 +7,30 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required packages
 find_package(PkgConfig REQUIRED)
-# pkg_check_modules(OPENCV REQUIRED opencv4)
+find_package(OpenCV REQUIRED)
+
 
 # Create executable
 add_executable(ascii_art_generator
     src/main.cpp
     src/ascii_generator.cpp
     src/color_utils.cpp
+    src/ascii_image.cpp
 )
 
 # Include directories
 target_include_directories(ascii_art_generator PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${OPENCV_INCLUDE_DIRS}
+    ${OpenCV_INCLUDE_DIRS}
 )
 
 # Link libraries
 target_link_libraries(ascii_art_generator PRIVATE
-    ${OPENCV_LIBRARIES}
+    ${OpenCV_LIBS}
 )
 
 # Compiler flags
 target_compile_options(ascii_art_generator PRIVATE
-    ${OPENCV_CFLAGS_OTHER}
     -Wall -Wextra -O3
 )
 

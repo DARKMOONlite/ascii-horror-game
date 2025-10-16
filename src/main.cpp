@@ -26,11 +26,12 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    // Create ASCII generator with contrast=10 (matching Python version)
-    AsciiGenerator generator(10, 100);
+    // Create ASCII generator with contrast=10
+    AsciiGenerator generator;
     
     try {
-        generator.generate_ascii_art(image_path, width);
+        auto ascii = generator.generate_ascii_from_file(image_path, width,width);
+        std::cout << ascii;
     } catch (const std::exception& e) {
         std::cerr << "Error generating ASCII art: " << e.what() << std::endl;
         return 1;

@@ -19,32 +19,31 @@ AsciiImage::AsciiImage(cv::Mat3b img_matrix, float horizontal_scale_factor){
             v[3] = static_cast<unsigned char>(ascii_char);
         }
     }
-    cv::resize(mat,mat_,cv::Size(),horizontal_scale_factor,1); // this also stores the matrix in mat_
+    cv::resize(mat,data.mat_,cv::Size(),horizontal_scale_factor,1); // this also stores the matrix in mat_
 }
-AsciiImage::AsciiImage(cv::Mat4b ascii_img){
-    mat_ = ascii_img;
+AsciiImage::AsciiImage(AsciiImageData data){
+    this->data = data;
 }
 
 cv::Mat AsciiImage::get_matrix(){
-    return(mat_);
+    return(data.mat_);
 }
 
 void AsciiImage::print(){
-    for (int i = 0; i < mat_.rows; ++i) {
-        for (int j = 0; j < mat_.cols; ++j) {
-            cv::Vec4b& v = mat_.at<cv::Vec4b>(i, j);
-            std::string color_code = ColorUtils::rgb_to_ansi(v[0], v[1], v[2]);
-            std::string reset_code = ColorUtils::reset_color();
-            std::cout << color_code << static_cast<char>(v[3]) << reset_code;
-        }
-        std::cout << std::endl;
-    }
+    std::cout << *this;
 }
+
+void AsciiImage::set_greyscale(bool grey){
+    data.greyscale = grey;
+}
+
 AsciiImage AsciiImage::crop(int x, int y, int size_x, int size_y){
-    return AsciiImage(mat_(cv::Rect(x,y,size_x,size_y)));
+    AsciiImage result = AsciiImage(data);
+    result.data.mat_ = data.mat_(cv::Rect(x, y, size_x, size_y)).clone();
+    return result;
 }
 AsciiImage AsciiImage::scale(float x,float y){
-    cv::Mat4b resized_img;
-    cv::resize(mat_,resized_img,cv::Size(),x,y);
-    return(resized_img);
+    AsciiImage result = AsciiImage(data);
+    cv::resize(data.mat_,result.data.mat_,cv::Size(),x,y);
+    return(result);
 }

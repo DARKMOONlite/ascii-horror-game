@@ -7,12 +7,42 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required packages
 find_package(PkgConfig REQUIRED)
-find_package(OpenCV REQUIRED)
+# find_package(OpenCV REQUIRED)
 
 include(FetchContent)
+
+# FetchContent_Declare(opencv
+#     GIT_REPOSITORY https://github.com/opencv/opencv.git
+#     GIT_TAG 4.10.0
+#     GIT_SHALLOW TRUE
+#     GIT_PROGRESS TRUE
+# )
+# FetchContent_MakeAvailable(opencv)
+find_package(OpenCV)
+if(NOT OpenCV_FOUND)
+    include(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FetchOpenCV.cmake
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/SetOpenCVConfigSupportVars.cmake
+    )
+    fetch_opencv(
+    CONFIG
+        BUILD_opencv_gapi OFF
+        BUILD_PERF_TESTS OFF
+        BUILD_TESTS OFF
+        BUILD_opencv_apps OFF
+        BUILD_opencv_world OFF
+        WITH_OPENGL OFF
+        # WITH_CUDA OFF
+        WITH_OPENCL OFF
+    )
+endif()
+
+
+
+
 FetchContent_Declare(ftxui
-  GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
-  GIT_TAG v6.1.9
+    GIT_REPOSITORY https://github.com/ArthurSonzogni/ftxui
+    GIT_TAG v6.1.9
 )
 FetchContent_MakeAvailable(ftxui)
 
@@ -26,16 +56,16 @@ add_executable(ascii_art_generator
     src/game_menu.cpp
 )
 
-
 # Include directories
 target_include_directories(ascii_art_generator PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${OpenCV_INCLUDE_DIRS}
+
 )
 
 # Link libraries
 target_link_libraries(ascii_art_generator PRIVATE
-    ${OpenCV_LIBS}
+    ${OpenCV_LIBRARIES}
     ftxui::component
     ftxui::dom
     ftxui::screen
@@ -68,7 +98,7 @@ target_include_directories(menu_test PRIVATE
 
 # Link libraries
 target_link_libraries(menu_test PRIVATE
-    ${OpenCV_LIBS}
+    ${OpenCV_LIBRARIES}
     ftxui::component
     ftxui::dom
     ftxui::screen

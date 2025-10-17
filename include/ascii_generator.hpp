@@ -4,7 +4,6 @@
 #include <string>
 #include <ascii_image.hpp>
 #include <opencv2/opencv.hpp>
-
 class AsciiGenerator {
 public:
     AsciiGenerator();

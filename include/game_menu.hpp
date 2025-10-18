@@ -7,7 +7,8 @@
 #include "ftxui/component/screen_interactive.hpp"  // for ScreenInteractive
 #include "ftxui/dom/elements.hpp"                  // for color, bgcolor, etc.
 #include <ascii_generator.hpp>
-
+#include <ansi_paragraph.hpp>
+#include "ansi_text.hpp"
 using namespace ftxui;
 
 
@@ -19,13 +20,13 @@ public:
         return(top_level);
     }    MenuStructure():
     inventory_renderer(Renderer([this] { 
-        return paragraph(inventory_text) | reflect(inventory_box); 
+        return ansi_paragraph(inventory_text) | reflect(inventory_box); 
     })),
     screen_renderer( Renderer([this] { 
-        return paragraph(screen_text) | reflect(screen_box); 
+        return ansi_paragraph(screen_text) | reflect(screen_box); 
     })),
     action_renderer(Renderer([this] { 
-        return paragraph(action_text) | reflect(action_box); 
+        return ansi_paragraph(action_text) | reflect(action_box); 
     }))
     {
     top_level = screen_renderer;

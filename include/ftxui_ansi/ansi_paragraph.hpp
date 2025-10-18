@@ -1,3 +1,5 @@
+#ifndef ANSI_PARAGRAPH_HPP
+#define ANSI_PARAGRAPH_HPP
 #include <functional>  // for function
 #include <sstream>     // for basic_istream, stringstream
 #include <string>      // for string, allocator, getline
@@ -35,7 +37,7 @@ Element AnsiSplit(const std::string& paragraph,
 /// @brief Return an element drawing the paragraph on multiple lines.
 /// @ingroup dom
 /// @see flexbox.
-Element ansi_paragraph(const std::string& the_text) {
+inline Element ansi_paragraph(const std::string& the_text) {
   return ansiParagraphAlignLeft(the_text);
 }
 
@@ -43,18 +45,18 @@ Element ansi_paragraph(const std::string& the_text) {
 /// the left.
 /// @ingroup dom
 /// @see flexbox.
-Element ansiParagraphAlignLeft(const std::string& the_text) {
+inline Element ansiParagraphAlignLeft(const std::string& the_text) {
   return AnsiSplit(the_text, [](const std::string& line) {
     static const auto config = FlexboxConfig().SetGap(1, 0);
     return flexbox(AnsiSplit(line), config);
   });
-};
+}
 
 /// @brief Return an element drawing the paragraph on multiple lines, aligned on
 /// the right.
 /// @ingroup dom
 /// @see flexbox.
-Element ansiParagraphAlignRight(const std::string& the_text) {
+inline Element ansiParagraphAlignRight(const std::string& the_text) {
   return AnsiSplit(the_text, [](const std::string& line) {
     static const auto config = FlexboxConfig().SetGap(1, 0).Set(
         FlexboxConfig::JustifyContent::FlexEnd);
@@ -66,7 +68,7 @@ Element ansiParagraphAlignRight(const std::string& the_text) {
 /// the center.
 /// @ingroup dom
 /// @see flexbox.
-Element ansiParagraphAlignCenter(const std::string& the_text) {
+inline Element ansiParagraphAlignCenter(const std::string& the_text) {
   return AnsiSplit(the_text, [](const std::string& line) {
     static const auto config =
         FlexboxConfig().SetGap(1, 0).Set(FlexboxConfig::JustifyContent::Center);
@@ -79,7 +81,7 @@ Element ansiParagraphAlignCenter(const std::string& the_text) {
 /// the center.
 /// @ingroup dom
 /// @see flexbox.
-Element ansiParagraphAlignJustify(const std::string& the_text) {
+inline Element ansiParagraphAlignJustify(const std::string& the_text) {
   return AnsiSplit(the_text, [](const std::string& line) {
     static const auto config = FlexboxConfig().SetGap(1, 0).Set(
         FlexboxConfig::JustifyContent::SpaceBetween);
@@ -90,3 +92,5 @@ Element ansiParagraphAlignJustify(const std::string& the_text) {
 }
 
 }  // namespace ftxui
+
+#endif

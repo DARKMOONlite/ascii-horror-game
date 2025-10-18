@@ -43,6 +43,8 @@ add_executable(ascii_art_generator
     "src/ascii_image/color_utils.cpp"
     "src/ascii_image/ascii_image.cpp"
     "src/game_menu.cpp"
+    "src/ftxui_ansi/ansi_text.cpp"
+    
 )
 
 # Include directories
@@ -79,6 +81,7 @@ add_executable(menu_test
     "src/ascii_image/color_utils.cpp"
     "src/ascii_image/ascii_image.cpp"
     "src/game_menu.cpp"
+    "src/ftxui_ansi/ansi_text.cpp"
 )
 # Include directories
 target_include_directories(menu_test PRIVATE
@@ -114,7 +117,6 @@ add_executable(ansi_test
     "src/ascii_image/ascii_image.cpp"
     "src/ascii_image/ascii_generator.cpp"
     "src/ftxui_ansi/ansi_text.cpp"
-    #"src/ftxui_ansi/ansi_paragraph.cpp"
 )
 
 target_include_directories(ansi_test PRIVATE

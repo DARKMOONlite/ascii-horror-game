@@ -19,7 +19,7 @@ int main() {
     auto screen = ScreenInteractive::Fullscreen();
     
     auto generator = AsciiGenerator();
-    auto image = generator.generate_ascii_from_file("images/tree.jpg",50,50);
+    auto image = generator.generate_ascii_from_file("images/tree.jpg",100,100);
     std::stringstream ss;
     ss << image;
     

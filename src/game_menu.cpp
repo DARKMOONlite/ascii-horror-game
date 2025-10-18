@@ -35,11 +35,12 @@ void DisplayHUD::updateScreen(){
 int i = 0;
         while (true) {
             std::this_thread::sleep_for(1000ms);
-            
+            int image_x =( menu.screen_box.x_max-menu.screen_box.x_min)/3;
+            int image_y = (menu.screen_box.y_max-menu.screen_box.y_min);
             // Update the menu text
-            menu.inventory_text = "inventory size : " 
-            + std::to_string(menu.inventory_box.y_max-menu.inventory_box.y_min)+"   " 
-            + std::to_string(menu.inventory_box.x_max-menu.inventory_box.x_min);
+            menu.inventory_text = "Image size : " 
+            + std::to_string(image_x)+"   " 
+            + std::to_string(image_y);
             
             menu.action_text = "action size : " 
             + std::to_string(menu.action_box.y_max-menu.action_box.y_min)+"   " 
@@ -47,8 +48,8 @@ int i = 0;
 
 
             // auto ascii = generator.generate_ascii_from_file("images/tree.jpg", menu.screen_box.x_max-menu.screen_box.x_min,menu.screen_box.y_max-menu.screen_box.y_min);
-            auto ascii = generator.generate_ascii_from_file("images/tree.jpg", 50,50);
-            ascii.set_greyscale(true);
+            auto ascii = generator.generate_ascii_from_file("images/boat.jpg", image_x,image_y);
+            ascii.set_greyscale(false);
             std::stringstream ss;
             ss << ascii;
             menu.screen_text = ss.str();

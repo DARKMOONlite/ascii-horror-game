@@ -36,31 +36,56 @@ FetchContent_Declare(ftxui
 )
 FetchContent_MakeAvailable(ftxui)
 
-# Create executable
-add_executable(ascii_art_generator
-    "src/main.cpp"
+#-------------- ASCII IMAGE LIBRARY ---------------------
+
+add_library(ascii_image STATIC
     "src/ascii_image/ascii_generator.cpp"
     "src/ascii_image/color_utils.cpp"
     "src/ascii_image/ascii_image.cpp"
-    "src/game_menu.cpp"
+)
+
+target_include_directories(ascii_image PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ascii_image
+    ${OpenCV_INCLUDE_DIRS}
+)
+
+target_link_libraries(ascii_image PUBLIC
+    ${OpenCV_LIBRARIES}
+)
+
+#-------------- FTXUI ANSI LIBRARY ---------------------
+
+add_library(ftxui_ansi STATIC
     "src/ftxui_ansi/ansi_text.cpp"
-    
+)
+
+target_include_directories(ftxui_ansi PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/ftxui_ansi
+)
+
+target_link_libraries(ftxui_ansi PUBLIC
+    ftxui::component
+    ftxui::dom
+    ftxui::screen
+)
+
+#-------------- EXECUTABLES ---------------------
+
+# Create executable
+add_executable(ascii_art_generator
+    "src/main.cpp"
+    "src/game_menu.cpp"
 )
 
 # Include directories
 target_include_directories(ascii_art_generator PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ascii_image
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ftxui_ansi
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${OpenCV_INCLUDE_DIRS}
 )
 
 # Link libraries
 target_link_libraries(ascii_art_generator PRIVATE
-    ${OpenCV_LIBRARIES}
-    ftxui::component
-    ftxui::dom
-    ftxui::screen
+    ascii_image
+    ftxui_ansi
 )
 
 # Compiler flags
@@ -77,26 +102,16 @@ install(TARGETS ascii_art_generator
 
 add_executable(menu_test
     "src/menu_test.cpp"
-    "src/ascii_image/ascii_generator.cpp"
-    "src/ascii_image/color_utils.cpp"
-    "src/ascii_image/ascii_image.cpp"
     "src/game_menu.cpp"
-    "src/ftxui_ansi/ansi_text.cpp"
-)
-# Include directories
-target_include_directories(menu_test PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ascii_image
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ftxui_ansi
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${OpenCV_INCLUDE_DIRS}
 )
 
-# Link libraries
+target_include_directories(menu_test PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
 target_link_libraries(menu_test PRIVATE
-    ${OpenCV_LIBRARIES}
-    ftxui::component
-    ftxui::dom
-    ftxui::screen
+    ascii_image
+    ftxui_ansi
 )
 
 # Compiler flags
@@ -113,24 +128,15 @@ install(TARGETS menu_test
 
 add_executable(ansi_test
     "src/ftxui_ansi/ansi_test.cpp"
-    "src/ascii_image/color_utils.cpp"
-    "src/ascii_image/ascii_image.cpp"
-    "src/ascii_image/ascii_generator.cpp"
-    "src/ftxui_ansi/ansi_text.cpp"
 )
 
 target_include_directories(ansi_test PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ascii_image
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/ftxui_ansi
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${OpenCV_INCLUDE_DIRS}
 )
 
 target_link_libraries(ansi_test PRIVATE
-    ${OpenCV_LIBRARIES}
-    ftxui::component
-    ftxui::dom
-    ftxui::screen
+    ascii_image
+    ftxui_ansi
 )
 
 target_compile_options(ansi_test PRIVATE
